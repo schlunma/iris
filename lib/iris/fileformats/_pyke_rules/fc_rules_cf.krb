@@ -1047,6 +1047,23 @@ fc_attribute_ukmo__process_flags
 #
 # Context:
 #   This rule will trigger iff a formula term that refers to a
+#   dimensionless vertical coordinate of atmosphere sigma.
+#
+# Purpose:
+#   Assert that the formula term refers to atmosphere sigma.
+#
+fc_formula_type_atmosphere_sigma_coordinate
+    foreach
+        facts_cf.formula_root($coordinate)
+        check getattr(engine.cf_var.cf_group[$coordinate], 'standard_name') == 'atmosphere_sigma_coordinate'
+    assert
+        python engine.requires['formula_type'] = 'atmosphere_sigma_coordinate'
+        facts_cf.formula_type(atmosphere_sigma_coordinate)
+        python engine.rule_triggered.add(rule.name)
+
+#
+# Context:
+#   This rule will trigger iff a formula term that refers to a
 #   dimensionless vertical coordinate of hybrid height.
 #
 # Purpose:
